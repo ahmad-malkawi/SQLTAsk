@@ -1,0 +1,74 @@
+--1-- all students names And courses names where student register in course 
+select sql_task.student.studentName , sql_task.courses.courseName 
+from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
+where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
+AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
+
+
+--2-- very course which it at lest has single student and number of student(s)which registered in it
+select  sql_task.courses.courseName ,count(sql_task.student.studentID) 
+from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
+where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
+AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
+group by (sql_task.courses.courseName )
+
+--3-- all student name and birthday how registered in course 'sit'
+select sql_task.student.studentName ,  sql_task.student.studentBirthDay 
+from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
+where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
+AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
+and sql_task.courses.courseName = 'sit';
+
+--4--all students names And courses names where student drop the course
+select sql_task.student.studentName , sql_task.courses.courseName 
+from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
+where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
+AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
+and sql_task.studentcoursemaping.droped != 0
+
+--5--
+select sql_task.student.studentName , sql_task.courses.courseName 
+from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
+where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
+AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
+and sql_task.student.studentName like '%ane%'
+
+--6--
+select sql_task.student.studentName , COUNT(sql_task.courses.courseName )
+from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
+where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
+AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
+and sql_task.studentcoursemaping.courseMark >50
+group by sql_task.student.studentName
+
+--7--
+select sql_task.student.studentName , AVG(sql_task.studentcoursemaping.courseMark )
+from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
+where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
+AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
+and sql_task.studentcoursemaping.courseMark >50
+group by sql_task.student.studentName
+
+--8--
+select  sql_task.courses.courseName ,count(sql_task.student.studentID) as number
+from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
+where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
+AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
+group by (sql_task.courses.courseName )
+order by (number) desc
+
+--9--
+select  sql_task.courses.courseName
+from sql_task.courses
+where sql_task.courses.courseID between 120 and 150
+
+--10--
+select sql_task.student.studentName ,sql_task.courses.courseName ,
+CASE
+    WHEN sql_task.studentcoursemaping .courseMark > 50 THEN "pass"
+    ELSE "fale"
+END AS mark
+
+from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
+where  sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
+AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
