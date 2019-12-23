@@ -26,14 +26,14 @@ where sql_task.student.studentID = sql_task.studentcoursemaping.studentID
 AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
 and sql_task.studentcoursemaping.droped != 0
 
---5--
+--5--all students who have "ane" in his name 
 select sql_task.student.studentName , sql_task.courses.courseName 
 from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
 where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
 AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
 and sql_task.student.studentName like '%ane%'
 
---6--
+--6-- student name and number of courses which he passed on them
 select sql_task.student.studentName , COUNT(sql_task.courses.courseName )
 from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
 where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
@@ -41,15 +41,14 @@ AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
 and sql_task.studentcoursemaping.courseMark >50
 group by sql_task.student.studentName
 
---7--
+--7-- the average for all student 
 select sql_task.student.studentName , AVG(sql_task.studentcoursemaping.courseMark )
 from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
 where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
 AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
-and sql_task.studentcoursemaping.courseMark >50
 group by sql_task.student.studentName
 
---8--
+--8--all course and number student registered in it ordered by student(s)number 
 select  sql_task.courses.courseName ,count(sql_task.student.studentID) as number
 from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
 where sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
@@ -65,10 +64,10 @@ where sql_task.courses.courseID between 120 and 150
 --10--
 select sql_task.student.studentName ,sql_task.courses.courseName ,
 CASE
-    WHEN sql_task.studentcoursemaping .courseMark > 50 THEN "pass"
-    ELSE "fale"
+	WHEN sql_task.studentcoursemaping .courseMark > 50 THEN "pass"
+	ELSE "fell"
 END AS mark
-
 from sql_task.courses,sql_task.student,sql_task.studentcoursemaping 
 where  sql_task.student.studentID = sql_task.studentcoursemaping.studentID 
 AND sql_task.courses.courseID = sql_task.studentcoursemaping.courseID
+and sql_task.studentcoursemaping.droped != 1
